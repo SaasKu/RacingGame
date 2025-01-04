@@ -3,7 +3,7 @@ extends CharacterBody3D
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
-@onready var pivot = %camera_origin # Handles pitch (vertical rotation)
+@onready var pivot = %twist # Handles pitch (vertical rotation)
 @onready var camera = %Camera3D # Your Camera node
 @export var sens = 0.5
 

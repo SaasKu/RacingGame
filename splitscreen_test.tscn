@@ -1,7 +1,9 @@
-[gd_scene load_steps=14 format=4 uid="uid://dbrvgp56ybjjh"]
+[gd_scene load_steps=16 format=4 uid="uid://dbrvgp56ybjjh"]
 
 [ext_resource type="PackedScene" uid="uid://cd1ipr66rv03m" path="res://Karts/Kart.tscn" id="1_lw1gj"]
+[ext_resource type="Script" path="res://grid_container.gd" id="1_nmo1w"]
 [ext_resource type="PackedScene" uid="uid://onxc0n3pblmf" path="res://scenes/player.tscn" id="2_qiei1"]
+[ext_resource type="Script" path="res://crosshair.gd" id="4_e8eyh"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gqtes"]
 
@@ -89,7 +91,6 @@ surface_material_override/0 = SubResource("StandardMaterial3D_jwews")
 [node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_5idec")
 
 [node name="GridContainer" type="GridContainer" parent="."]
@@ -101,31 +102,51 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 2
+script = ExtResource("1_nmo1w")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 0
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer"]
+[node name="left_side" type="SubViewport" parent="GridContainer/SubViewportContainer"]
+unique_name_in_owner = true
 handle_input_locally = false
 size = Vector2i(574, 648)
 render_target_update_mode = 4
 
-[node name="VehicleBody3D" parent="GridContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_lw1gj")]
+[node name="VehicleBody3D" parent="GridContainer/SubViewportContainer/left_side" instance=ExtResource("1_lw1gj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.0898, 2.87199, -70.0506)
 
 [node name="SubViewportContainer2" type="SubViewportContainer" parent="GridContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
+[node name="right_side" type="SubViewport" parent="GridContainer/SubViewportContainer2"]
+unique_name_in_owner = true
 handle_input_locally = false
 size = Vector2i(574, 648)
 render_target_update_mode = 4
 
-[node name="Player" parent="GridContainer/SubViewportContainer2/SubViewport" instance=ExtResource("2_qiei1")]
+[node name="Player" parent="GridContainer/SubViewportContainer2/right_side" instance=ExtResource("2_qiei1")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.50266, 0)
+
+[node name="CenterContainer" type="CenterContainer" parent="GridContainer/SubViewportContainer2/right_side"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_e8eyh")

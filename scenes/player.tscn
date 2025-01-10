@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://onxc0n3pblmf"]
+[gd_scene load_steps=13 format=4 uid="uid://onxc0n3pblmf"]
 
 [ext_resource type="Script" path="res://scenes/player.gd" id="1_ddatb"]
 
@@ -8,6 +8,8 @@
 albedo_color = Color(0.367635, 0, 0.0768035, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_mrhtp"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_smk78"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcjyy"]
 
@@ -86,7 +88,7 @@ unique_name_in_owner = true
 
 [node name="Camera3D" type="Camera3D" parent="twist/pitch"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 1.78118, 4.15144)
+transform = Transform3D(1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4.62361, 5.66122)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CapsuleMesh_oilkq")
@@ -95,16 +97,22 @@ surface_material_override/0 = SubResource("StandardMaterial3D_0l3o0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_mrhtp")
 
-[node name="devil_horns" type="Node3D" parent="."]
-transform = Transform3D(-4.37114e-09, 0, -0.1, 0, 0.1, 0, 0.1, 0, -4.37114e-09, 0, 0.989511, 0.632218)
+[node name="head" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.33116, 0)
+mesh = SubResource("SphereMesh_smk78")
+surface_material_override/0 = SubResource("StandardMaterial3D_0l3o0")
 
-[node name="Cone" type="MeshInstance3D" parent="devil_horns"]
+[node name="devil_horns" type="Node3D" parent="head"]
+transform = Transform3D(-4.37114e-09, 0, -0.1, 0, 0.1, 0, 0.1, 0, -4.37114e-09, 0, 0.58651, 0.421402)
+
+[node name="Cone" type="MeshInstance3D" parent="head/devil_horns"]
 transform = Transform3D(0.5, 0.866025, -3.72529e-09, -0.86273, 0.498097, -0.0871557, -0.0754791, 0.0435779, 0.996195, 4, 4, 3)
 mesh = SubResource("ArrayMesh_kvnb2")
 skeleton = NodePath("")
 surface_material_override/0 = SubResource("StandardMaterial3D_ylbw3")
 
-[node name="Cone_001" type="MeshInstance3D" parent="devil_horns"]
+[node name="Cone_001" type="MeshInstance3D" parent="head/devil_horns"]
 transform = Transform3D(0.5, 0.866025, 3.72529e-09, -0.86273, 0.498097, 0.0871557, 0.0754791, -0.0435779, 0.996195, 4, 4, -3)
 mesh = SubResource("ArrayMesh_stqt3")
 skeleton = NodePath("")

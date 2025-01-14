@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=4 uid="uid://cd1ipr66rv03m"]
+[gd_scene load_steps=26 format=4 uid="uid://cd1ipr66rv03m"]
 
 [ext_resource type="Script" path="res://test_car.gd" id="1_uqsbg"]
+[ext_resource type="Shader" uid="uid://e67ccuhnce2t" path="res://Assets/shaders/visual_shader_test.tres" id="2_6upyx"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_5mmql"]
 
@@ -8,7 +9,7 @@
 size = Vector3(4, 0.5, 1.5)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kvki2"]
-albedo_color = Color(5, 5, 5, 1)
+albedo_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kubuw"]
 
@@ -320,6 +321,129 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_by1aq")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_is1fn"]
+albedo_color = Color(0.150668, 0.0441706, 0.0738868, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5watk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c43kn"]
+render_priority = 0
+shader = ExtResource("2_6upyx")
+shader_parameter/ColorParameter = Color(0.226707, 0.226707, 0.226707, 1)
+shader_parameter/Strength = 2.0
+shader_parameter/LightColor = Color(5, 0.298, 0.236, 1)
+shader_parameter/FloatParameter = 0.375
+
+[sub_resource type="Animation" id="Animation_uxnvf"]
+resource_name = "flame"
+length = 0.4
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("flame_1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("flame_2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("flame_2:surface_material_override/0:shader_parameter/FloatParameter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.375, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-6.49116, 2.79808, 0), Vector3(-8.95247, 2.79808, 0), Vector3(-6.49116, 2.79808, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_sa4g8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("flame_1:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("flame_2:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("flame_2:surface_material_override/0:shader_parameter/FloatParameter")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.375]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-6.49116, 2.79808, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_57bev"]
+_data = {
+"RESET": SubResource("Animation_sa4g8"),
+"flame": SubResource("Animation_uxnvf")
+}
+
 [node name="VehicleBody3D" type="VehicleBody3D"]
 script = ExtResource("1_uqsbg")
 
@@ -333,6 +457,7 @@ shape = SubResource("BoxShape3D_swpoy")
 
 [node name="front_left" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.5, 0, -0.8)
+use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.75
 
@@ -344,6 +469,7 @@ skeleton = NodePath("")
 
 [node name="front_right" type="VehicleWheel3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.5, 0, 0.8)
+use_as_traction = true
 use_as_steering = true
 wheel_radius = 0.75
 
@@ -377,8 +503,33 @@ skeleton = NodePath("")
 
 [node name="Cube_001" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1.31134e-09, 0, -0.03, 0, 0.03, 0, 0.03, 0, -1.31134e-09, 2, 0, 0)
+visible = false
+mesh = SubResource("ArrayMesh_anp51")
+skeleton = NodePath("")
+
+[node name="Cube_002" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.31134e-09, 0, -0.03, 0, 0.03, 0, 0.03, 0, -1.31134e-09, 2, 0, 0)
+material_override = SubResource("StandardMaterial3D_is1fn")
 mesh = SubResource("ArrayMesh_anp51")
 skeleton = NodePath("")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -6.49116, 2.79808, 0)
+
+[node name="flame_1" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.50643e-08, 4.92657, 0, -0.344631, -2.15347e-07, 0, 0, 0, 0.159162, -4.84113, 0.409893, -0.538346)
+visible = false
+mesh = SubResource("BoxMesh_5watk")
+surface_material_override/0 = SubResource("ShaderMaterial_c43kn")
+
+[node name="flame_2" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1.50643e-08, 4.92657, 0, -0.344631, -2.15347e-07, 0, 0, 0, 0.159162, -4.84189, 0.409977, 0.538113)
+visible = false
+mesh = SubResource("BoxMesh_5watk")
+surface_material_override/0 = SubResource("ShaderMaterial_c43kn")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_57bev")
+}

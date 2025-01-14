@@ -36,35 +36,6 @@ func _unhandled_input(event):
 			)
 			head.rotation.x = pivot.rotation.x
 			head.rotation.y = pivot.rotation.y
-			
-		# Rotate vertically around the pivot (pitch)
-
-
-
-
-#func _input(event):
-	#if event is InputEventMouseMotion:
-		#var screen_width = get_viewport().size.x
-		#var screen_height = get_viewport().size.y
-#
-		## Define the start of the right viewport
-		#var right_viewport_start_x = screen_width / 2
-#
-		#var mouse_x = event.position.x
-		#var mouse_y = event.position.y
-#
-		## If the mouse goes outside the right viewport
-		#if mouse_x < right_viewport_start_x:  # Mouse moves into the left viewport
-			#Input.warp_mouse(Vector2(right_viewport_start_x, mouse_y))
-		#elif mouse_x > screen_width:  # Mouse goes beyond the right edge of the screen
-			#Input.warp_mouse(Vector2(screen_width, mouse_y))
-#
-		## Rotate horizontally around the CharacterBody3D (yaw)
-		#rotate_y(deg_to_rad(-event.relative.x * sens))
-#
-		## Rotate vertically around the pivot (pitch)
-		#pivot.rotation.x = clamp(pivot.rotation.x - deg_to_rad(event.relative.y * sens), deg_to_rad(-90), deg_to_rad(45))
-#
 
 
 
